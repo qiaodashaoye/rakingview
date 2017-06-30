@@ -16,20 +16,9 @@ import android.view.View;
  */
 
 public class RakingView extends View{
-    private Paint top_point;
-    private Paint left1_point;
-    private Paint left2_point;
-    private Paint moddle1_point;
-    private Paint moddle2_point;
-    private Paint right1_point;
-    private Paint right2_point;
+    private Paint mPoint;
+    private Paint mLines;
 
-    private Paint leftLine;
-    private Paint rightLine;
-    private Paint center_Line;
-    private Paint bottomLine1;
-    private Paint bottomLine2;
-    private Paint bottomLine3;
 
     private Paint str_paint;//文字画笔
     private Paint str_paint_count;//数量画笔
@@ -69,22 +58,33 @@ public class RakingView extends View{
         int vLine=50;
         double ragle=15*(Math.PI/180);
         double x=vLine/(Float.valueOf(Math.tan(ragle)+""));//利用正切值，对边比邻边
-        canvas.drawCircle(width,height,3,top_point);
-        canvas.drawLine(width,height,width,height+vLine,center_Line);
-        canvas.drawLine(width,height,width-Float.valueOf(x+""),height+vLine,leftLine);
-        canvas.drawLine(width,height,width+Float.valueOf(x+""),height+vLine,rightLine);
 
-        canvas.drawLine(width-Float.valueOf(x+""),height+vLine,width-Float.valueOf(x+""),height+vLine*2,bottomLine1);
-        canvas.drawLine(width,height+vLine,width,height+vLine*2,bottomLine2);
-        canvas.drawLine(width+Float.valueOf(x+""),height+vLine,width+Float.valueOf(x+""),height+vLine*2,bottomLine3);
+        float[] pointSite=new float[]{
+                //顶部点
+                width,height,
+                //第一行的点（从左到右）
+                width-Float.valueOf(x+""),height+vLine,
+                width,height+vLine,
+                width+Float.valueOf(x+""),height+vLine,
+                //第二行的点（从左到右）
+                width-Float.valueOf(x+""),height+vLine*2,
+                width,height+vLine*2,
+                width+Float.valueOf(x+""),height+vLine*2
+        };
 
-        canvas.drawCircle(width-Float.valueOf(x+""),height+vLine,3,left1_point);
-        canvas.drawCircle(width,height+vLine,3,moddle1_point);
-        canvas.drawCircle(width+Float.valueOf(x+""),height+vLine,3,right1_point);
+        float[] linesSite=new float[]{
+                width,height,width,height+vLine,
+                width,height,width-Float.valueOf(x+""),height+vLine,
+                width,height,width+Float.valueOf(x+""),height+vLine,
 
-        canvas.drawCircle(width-Float.valueOf(x+""),height+vLine*2,3,left2_point);
-        canvas.drawCircle(width,height+vLine*2,3,moddle2_point);
-        canvas.drawCircle(width+Float.valueOf(x+""),height+vLine*2,3,right2_point);
+                width-Float.valueOf(x+""),height+vLine,width-Float.valueOf(x+""),height+vLine*2,
+                width,height+vLine,width,height+vLine*2,
+                width+Float.valueOf(x+""),height+vLine,width+Float.valueOf(x+""),height+vLine*2
+
+        };
+
+        canvas.drawLines(linesSite,mLines);
+        canvas.drawPoints(pointSite,mPoint);
 
         canvas.drawText(str_count[0]+"",width-Float.valueOf(x+"")-str_rect_count.width()/2,height+vLine*2+str_rect_count.height(),str_paint_count);
         canvas.drawText(str_count[1]+"",width-str_rect_count.width()/2,height+vLine*2+str_rect_count.height(),str_paint_count);
@@ -162,74 +162,21 @@ public class RakingView extends View{
     }
 
     private void initPoint(){
-        top_point = new Paint();
-        top_point.setAntiAlias(true);
-        top_point.setColor(Color.WHITE);
+        mPoint = new Paint();
+        mPoint.setAntiAlias(true);
+        mPoint.setColor(Color.WHITE);
+        mPoint.setStrokeCap(Paint.Cap.ROUND);
+        mPoint.setStyle(Paint.Style.FILL);
+        mPoint.setStrokeWidth(5f);         //设置画笔宽度
 
-        left1_point = new Paint();
-        left1_point.setAntiAlias(true);
-        left1_point.setColor(Color.WHITE);
-
-        left2_point = new Paint();
-        left2_point.setAntiAlias(true);
-        left2_point.setColor(Color.WHITE);
-
-        top_point = new Paint();
-        top_point.setAntiAlias(true);
-        top_point.setColor(Color.WHITE);
-
-        moddle1_point = new Paint();
-        moddle1_point.setAntiAlias(true);
-        moddle1_point.setColor(Color.WHITE);
-
-        moddle2_point = new Paint();
-        moddle2_point.setAntiAlias(true);
-        moddle2_point.setColor(Color.WHITE);
-
-        right1_point = new Paint();
-        right1_point.setAntiAlias(true);
-        right1_point.setColor(Color.WHITE);
-
-        right2_point = new Paint();
-        right2_point.setAntiAlias(true);
-        right2_point.setColor(Color.WHITE);
     }
 
     private void initLine(){
-        leftLine=new Paint();
-        leftLine=new Paint();
-        leftLine.setAntiAlias(true);
-        leftLine.setColor(Color.WHITE);
 
-        rightLine=new Paint();
-        rightLine=new Paint();
-        rightLine.setAntiAlias(true);
-        rightLine.setColor(Color.WHITE);
+        mLines=new Paint();
+        mLines.setAntiAlias(true);
+        mLines.setColor(Color.WHITE);
 
-        center_Line=new Paint();
-        center_Line=new Paint();
-        center_Line.setAntiAlias(true);
-        center_Line.setColor(Color.WHITE);
-
-        bottomLine1=new Paint();
-        bottomLine1=new Paint();
-        bottomLine1.setAntiAlias(true);
-        bottomLine1.setColor(Color.WHITE);
-
-        bottomLine1=new Paint();
-        bottomLine1=new Paint();
-        bottomLine1.setAntiAlias(true);
-        bottomLine1.setColor(Color.WHITE);
-
-        bottomLine2=new Paint();
-        bottomLine2=new Paint();
-        bottomLine2.setAntiAlias(true);
-        bottomLine2.setColor(Color.WHITE);
-
-        bottomLine3=new Paint();
-        bottomLine3=new Paint();
-        bottomLine3.setAntiAlias(true);
-        bottomLine3.setColor(Color.WHITE);
 
     }
 
